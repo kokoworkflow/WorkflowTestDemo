@@ -1,0 +1,50 @@
+﻿@model WorkFlowDemo.Models.Role
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Role</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ROLEDESCRIPTION)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ROLEDESCRIPTION)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ROLETYPE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ROLETYPE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CRATEDDATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CRATEDDATE)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LASTUPDATEDDATE)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LASTUPDATEDDATE)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ROLEID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

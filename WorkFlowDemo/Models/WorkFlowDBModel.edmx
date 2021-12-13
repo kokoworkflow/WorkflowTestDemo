@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WorkflowDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Claim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EmployerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Wage" Type="float" />
+          <Property Name="Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="LastUpdatedDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ROLEID" />
+          </Key>
+          <Property Name="ROLEID" Type="smallint" Nullable="false" />
+          <Property Name="ROLEDESCRIPTION" Type="nvarchar" MaxLength="50" />
+          <Property Name="ROLETYPE" Type="nvarchar" MaxLength="50" />
+          <Property Name="CRATEDDATE" Type="datetime" />
+          <Property Name="LASTUPDATEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="WorkItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClaimId" Type="int" Nullable="false" />
+          <Property Name="WorkItemType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="WorkItemStatus" Type="int" Nullable="false" />
+          <Property Name="AssignedTo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkItemHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkItemId" Type="int" Nullable="false" />
+          <Property Name="WorkItemStatus" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="AssignedTo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_WorkItem_Claim">
+          <End Role="Claim" Type="Self.Claim" Multiplicity="1" />
+          <End Role="WorkItem" Type="Self.WorkItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Claim">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkItem">
+              <PropertyRef Name="ClaimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkItemHistory_WorkItem">
+          <End Role="WorkItem" Type="Self.WorkItem" Multiplicity="1" />
+          <End Role="WorkItemHistory" Type="Self.WorkItemHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkItem">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkItemHistory">
+              <PropertyRef Name="WorkItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WorkflowDBModelStoreContainer">
+          <EntitySet Name="Claim" EntityType="Self.Claim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkItem" EntityType="Self.WorkItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkItemHistory" EntityType="Self.WorkItemHistory" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_WorkItem_Claim" Association="Self.FK_WorkItem_Claim">
+            <End Role="Claim" EntitySet="Claim" />
+            <End Role="WorkItem" EntitySet="WorkItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkItemHistory_WorkItem" Association="Self.FK_WorkItemHistory_WorkItem">
+            <End Role="WorkItem" EntitySet="WorkItem" />
+            <End Role="WorkItemHistory" EntitySet="WorkItemHistory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WorkflowDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="WorkflowDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Claims" EntityType="WorkflowDBModel.Claim" />
+          <EntitySet Name="WorkItems" EntityType="WorkflowDBModel.WorkItem" />
+          <AssociationSet Name="FK_WorkItem_Claim" Association="WorkflowDBModel.FK_WorkItem_Claim">
+            <End Role="Claim" EntitySet="Claims" />
+            <End Role="WorkItem" EntitySet="WorkItems" />
+          </AssociationSet>
+          <EntitySet Name="WorkItemHistories" EntityType="WorkflowDBModel.WorkItemHistory" />
+          <AssociationSet Name="FK_WorkItemHistory_WorkItem" Association="WorkflowDBModel.FK_WorkItemHistory_WorkItem">
+            <End Role="WorkItem" EntitySet="WorkItems" />
+            <End Role="WorkItemHistory" EntitySet="WorkItemHistories" />
+          </AssociationSet>
+          <EntitySet Name="Roles" EntityType="WorkflowDBModel.Role" />
+        </EntityContainer>
+        <EntityType Name="Claim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="EmployerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Wage" Type="Double" />
+          <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="WorkItems" Relationship="WorkflowDBModel.FK_WorkItem_Claim" FromRole="Claim" ToRole="WorkItem" />
+        </EntityType>
+        <EntityType Name="WorkItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ClaimId" Type="Int32" Nullable="false" />
+          <Property Name="WorkItemType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WorkItemStatus" Type="Int32" Nullable="false" />
+          <Property Name="AssignedTo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Claim" Relationship="WorkflowDBModel.FK_WorkItem_Claim" FromRole="WorkItem" ToRole="Claim" />
+          <NavigationProperty Name="WorkItemHistories" Relationship="WorkflowDBModel.FK_WorkItemHistory_WorkItem" FromRole="WorkItem" ToRole="WorkItemHistory" />
+        </EntityType>
+        <Association Name="FK_WorkItem_Claim">
+          <End Type="WorkflowDBModel.Claim" Role="Claim" Multiplicity="1" />
+          <End Type="WorkflowDBModel.WorkItem" Role="WorkItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Claim">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkItem">
+              <PropertyRef Name="ClaimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="WorkItemHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkItemId" Type="Int32" Nullable="false" />
+          <Property Name="WorkItemStatus" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AssignedTo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Comment" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="WorkItem" Relationship="WorkflowDBModel.FK_WorkItemHistory_WorkItem" FromRole="WorkItemHistory" ToRole="WorkItem" />
+        </EntityType>
+        <Association Name="FK_WorkItemHistory_WorkItem">
+          <End Type="WorkflowDBModel.WorkItem" Role="WorkItem" Multiplicity="1" />
+          <End Type="WorkflowDBModel.WorkItemHistory" Role="WorkItemHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkItem">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="WorkItemHistory">
+              <PropertyRef Name="WorkItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ROLEID" />
+          </Key>
+          <Property Name="ROLEID" Type="Int16" Nullable="false" />
+          <Property Name="ROLEDESCRIPTION" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ROLETYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CRATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="LASTUPDATEDDATE" Type="DateTime" Precision="3" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WorkflowDBModelStoreContainer" CdmEntityContainer="WorkflowDBEntities">
+          <EntitySetMapping Name="Claims">
+            <EntityTypeMapping TypeName="WorkflowDBModel.Claim">
+              <MappingFragment StoreEntitySet="Claim">
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Wage" ColumnName="Wage" />
+                <ScalarProperty Name="EmployerName" ColumnName="EmployerName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkItems">
+            <EntityTypeMapping TypeName="WorkflowDBModel.WorkItem">
+              <MappingFragment StoreEntitySet="WorkItem">
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
+                <ScalarProperty Name="WorkItemStatus" ColumnName="WorkItemStatus" />
+                <ScalarProperty Name="WorkItemType" ColumnName="WorkItemType" />
+                <ScalarProperty Name="ClaimId" ColumnName="ClaimId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkItemHistories">
+            <EntityTypeMapping TypeName="WorkflowDBModel.WorkItemHistory">
+              <MappingFragment StoreEntitySet="WorkItemHistory">
+                <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="AssignedTo" ColumnName="AssignedTo" />
+                <ScalarProperty Name="WorkItemStatus" ColumnName="WorkItemStatus" />
+                <ScalarProperty Name="WorkItemId" ColumnName="WorkItemId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="WorkflowDBModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="LASTUPDATEDDATE" ColumnName="LASTUPDATEDDATE" />
+                <ScalarProperty Name="CRATEDDATE" ColumnName="CRATEDDATE" />
+                <ScalarProperty Name="ROLETYPE" ColumnName="ROLETYPE" />
+                <ScalarProperty Name="ROLEDESCRIPTION" ColumnName="ROLEDESCRIPTION" />
+                <ScalarProperty Name="ROLEID" ColumnName="ROLEID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

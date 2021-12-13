@@ -1,0 +1,51 @@
+﻿@model IEnumerable<WorkFlowDemo.Models.Role>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ROLEDESCRIPTION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ROLETYPE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CRATEDDATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LASTUPDATEDDATE)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ROLEDESCRIPTION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ROLETYPE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CRATEDDATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LASTUPDATEDDATE)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ROLEID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ROLEID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ROLEID })
+        </td>
+    </tr>
+}
+
+</table>

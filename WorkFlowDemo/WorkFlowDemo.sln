@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29025.244
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkFlowDemo", "WorkFlowDemo.csproj", "{55AACB70-8561-407A-916A-AF3E5FF7780D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowLib", "..\WorkflowLib\WorkflowLib.csproj", "{0AC150BA-BDC5-462F-9AD5-16D2AA63D399}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{55AACB70-8561-407A-916A-AF3E5FF7780D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55AACB70-8561-407A-916A-AF3E5FF7780D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55AACB70-8561-407A-916A-AF3E5FF7780D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55AACB70-8561-407A-916A-AF3E5FF7780D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AC150BA-BDC5-462F-9AD5-16D2AA63D399}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AC150BA-BDC5-462F-9AD5-16D2AA63D399}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AC150BA-BDC5-462F-9AD5-16D2AA63D399}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AC150BA-BDC5-462F-9AD5-16D2AA63D399}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E0EA21D4-DC99-4EB4-A811-32650D91D8F2}
+	EndGlobalSection
+EndGlobal

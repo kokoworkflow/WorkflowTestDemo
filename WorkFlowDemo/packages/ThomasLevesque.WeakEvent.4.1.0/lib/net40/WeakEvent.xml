@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WeakEvent</name>
+    </assembly>
+    <members>
+        <member name="F:WeakEvent.DelegateCollectionBase`2._delegates">
+            <summary>
+            List of weak delegates subscribed to the event.
+            </summary>
+        </member>
+        <member name="F:WeakEvent.DelegateCollectionBase`2._index">
+            <summary>
+            Quick lookup index for individual handlers.
+            The key is the handler's hashcode (computed by GetDelegateHashCode).
+            The value is a list of indices in _delegates where there's a weak delegate
+            for a handler with that hashcode.
+            </summary>
+        </member>
+        <member name="M:WeakEvent.DelegateCollectionBase`2.Remove(System.Delegate[])">
+            <summary>
+            Removes the last occurrence of delegate's invocation list.
+            </summary>
+            <remarks>
+            Follows the same logic as MulticastDelegate.Remove.
+            </remarks>
+        </member>
+        <member name="M:WeakEvent.DelegateCollectionBase`2.ResetDeadHandlerScanCountdown">
+            <summary>
+            Resets the countdown before dead handlers are scanned
+            </summary>
+        </member>
+        <member name="M:WeakEvent.DelegateCollectionBase`2.TryScanDeadHandlers">
+            <summary>
+            Scans dead handlers if the countdown reaches 0
+            </summary>
+        </member>
+        <member name="T:WeakEvent.WeakEventSource`1">
+            <summary>
+            An event with weak subscription, i.e. it won't keep handlers from being garbage collected.
+            </summary>
+            <typeparam name="TEventArgs">The type of the event's arguments.</typeparam>
+        </member>
+        <member name="M:WeakEvent.WeakEventSource`1.Raise(System.Object,`0)">
+            <summary>
+            Raises the event by invoking each handler that hasn't been garbage collected.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="args">An object that contains the event data.</param>
+            <remarks>The handlers are invoked one after the other, in the order they were subscribed in.</remarks>
+        </member>
+        <member name="M:WeakEvent.WeakEventSource`1.Raise(System.Object,`0,System.Func{System.Exception,System.Boolean})">
+            <summary>
+            Raises the event by invoking each handler that hasn't been garbage collected. Exceptions thrown by
+            individual handlers are passed to the specified <c>exceptionHandler</c> to decide what to do with them.
+            </summary>
+            <param name="sender">The source of the event.</param>
+            <param name="args">An object that contains the event data.</param>
+            <param name="exceptionHandler">A delegate that handles exceptions thrown by individual handlers.
+            Return <c>true</c> to indicate that the exception was handled.</param>
+            <remarks>The handlers are invoked one after the other, in the order they were subscribed in.</remarks>
+        </member>
+        <member name="M:WeakEvent.WeakEventSource`1.Subscribe(System.EventHandler{`0})">
+            <summary>
+            Adds an event handler.
+            </summary>
+            <param name="handler">The handler to subscribe.</param>
+            <remarks>Only a weak reference to the handler's <c>Target</c> is kept, so that it can be garbage collected.</remarks>
+        </member>
+        <member name="M:WeakEvent.WeakEventSource`1.Subscribe(System.Object,System.EventHandler{`0})">
+            <summary>
+            Adds an event handler, specifying a lifetime object.
+            </summary>
+            <param name="lifetimeObject">An object that keeps the handler alive as long as it's alive.</param>
+            <param name="handler">The handler to subscribe.</param>
+            <remarks>Only a weak reference to the handler's <c>Target</c> is kept, so that it can be garbage collected.
+            However, as long as the <c>lifetime</c> object is alive, the handler will be kept alive. This is useful for
+            subscribing with anonymous methods (e.g. lambda expressions).</remarks>
+        </member>
+        <member name="M:WeakEvent.WeakEventSource`1.Unsubscribe(System.EventHandler{`0})">
+            <summary>
+            Removes an event handler.
+            </summary>
+            <param name="handler">The handler to unsubscribe.</param>
+            <remarks>The behavior is the same as that of <see cref="M:System.Delegate.Remove(System.Delegate,System.Delegate)"/>. Only the last instance
+            of the handler's invocation list is removed. If the exact invocation list is not found, nothing is removed.</remarks>
+        </member>
+        <member name="M:WeakEvent.WeakEventSource`1.Unsubscribe(System.Object,System.EventHandler{`0})">
+            <summary>
+            Removes an event handler that was subscribed with a lifetime object.
+            </summary>
+            <param name="lifetimeObject">The lifetime object that was associated with the handler.</param>
+            <param name="handler">The handler to unsubscribe.</param>
+            <remarks>The behavior is the same as that of <see cref="M:System.Delegate.Remove(System.Delegate,System.Delegate)"/>. Only the last instance
+            of the handler's invocation list is removed. If the exact invocation list is not found, nothing is removed.</remarks>
+        </member>
+    </members>
+</doc>
