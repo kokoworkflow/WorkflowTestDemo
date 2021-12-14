@@ -97,9 +97,6 @@ namespace WorkFlowDemo.Controllers
             {
                 if (WorkflowInit.Runtime.IsProcessExists(processId.Value))
                     return;
-
-                WorkflowInit.Runtime.CreateInstance("SimpleWF", processId.Value);
-
                 WorkflowInit.Runtime.CreateInstance(schemeCode, processId.Value);
                 Console.WriteLine("CreateInstance - OK.", processId);
             }
