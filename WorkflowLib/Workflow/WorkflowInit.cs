@@ -21,6 +21,7 @@ namespace WorkflowLib.Workflow
         {
             var loopPlugin = new LoopPlugin();
             var basicPlugin = new BasicPlugin();
+            var approvalPlugin = new ApprovalPlugin();
             
             basicPlugin.UsersInRoleAsync += UsersInRoleAsync;
             basicPlugin.CheckPredefinedActorAsync += CheckPredefinedActorAsync;
@@ -47,7 +48,7 @@ namespace WorkflowLib.Workflow
                 .WithPersistenceProvider(dbProvider)
                 .SwitchAutoUpdateSchemeBeforeGetAvailableCommandsOn()
                 .RegisterAssemblyForCodeActions(Assembly.GetExecutingAssembly())
-                .WithPlugins(null, basicPlugin, loopPlugin)
+                .WithPlugins(null, basicPlugin, loopPlugin, approvalPlugin)
                 //.WithExternalParametersProvider()
                 .CodeActionsDebugOn()
                 .AsSingleServer()
